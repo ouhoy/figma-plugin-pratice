@@ -24,7 +24,7 @@
     <input class="input__field" placeholder="Your Petma display name" id="name" type="text">
 
     <label for="description">Description</label>
-    <input class="textarea"  placeholder="Your post goes here" id="description" rows="2"></input>
+    <textarea class="textarea" placeholder="Your post goes here" id="description" rows=2></textarea>
 </div>
 <div class="switch">
 
@@ -35,13 +35,13 @@
 
 <div class="radio">
 
-    <input class="radio__button" type="radio" name="variantGroup" id="radioButtonOne">
+    <input class="radio__button" type="radio" name="variantGroup" id="radioButtonOne" value="1">
     <label for="radioButtonOne" class="radio__label">No Image</label>
 
-    <input class="radio__button" type="radio" name="variantGroup" id="radioButtonTwo">
+    <input class="radio__button" type="radio" name="variantGroup" id="radioButtonTwo" value="2">
     <label for="radioButtonTwo" class="radio__label">Single Image</label>
 
-    <input class="radio__button" type="radio" name="variantGroup" id="radioButtonThree">
+    <input class="radio__button" type="radio" name="variantGroup" id="radioButtonThree" value="3">
     <label for="radioButtonThree" class="radio__label">Carousel</label>
 
 </div>
@@ -49,3 +49,24 @@
 <div>
     <button class="button button--primary" id="submit-post">Submit</button>
 </div>
+
+<script>
+
+    function $(id, selectAll = false) {
+        return selectAll ? document.querySelectorAll(id) : document.querySelector(id);
+    }
+
+    const submitPost = $("#submit-post")
+
+    submitPost.addEventListener("click", function () {
+
+        const name = $("#name").value;
+        const username = $("#username").value;
+        const description = $("#description").value;
+        const darkMode = $("#dark-mode-on").checked;
+        const imageVariant = $("input[name='variantGroup']:checked").value
+
+        parent.postMessage({pluginMessage: {name, username, description, darkMode, imageVariant}}, "*")
+    })
+
+</script>
