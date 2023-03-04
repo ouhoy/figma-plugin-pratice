@@ -1,3 +1,11 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/thomas-lowry/figma-plugin-ds/dist/figma-plugin-ds.css">
+
+
+<style>
+    input, textarea {
+        display: block;
+    }
+</style>
 <h1>Petma Plugin</h1>
 <div>
     <label for="username">Username</label>
@@ -7,5 +15,12 @@
     <input id="name" type="text">
 
     <label for="description">Description</label>
-    <textarea id="description"></textarea>
+    <textarea id="description" rows="2"></textarea>
+
+    <div class="switch">
+
+        <input class="switch__toggle" type="checkbox" id="dark-mode-on">
+        <label class="switch__label" for="dark-mode-on">Dark Mode</label>
+
+    </div>
 </div>
