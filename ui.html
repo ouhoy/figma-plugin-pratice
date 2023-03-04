@@ -1,17 +1,11 @@
-<h2>Rectangle Creator</h2>
-<p>Count: <input id="count" value="5"></p>
-<button id="create">Create</button>
-<button id="cancel">Cancel</button>
-<script>
+<h1>Petma Plugin</h1>
+<div>
+    <label for="username">Username</label>
+    <input id="username" type="text">
 
-document.getElementById('create').onclick = () => {
-  const textbox = document.getElementById('count');
-  const count = parseInt(textbox.value, 10);
-  parent.postMessage({ pluginMessage: { type: 'create-rectangles', count } }, '*')
-}
+    <label for="name">Name</label>
+    <input id="name" type="text">
 
-document.getElementById('cancel').onclick = () => {
-  parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
-}
-
-</script>
+    <label for="description">Description</label>
+    <textarea id="description"></textarea>
+</div>
