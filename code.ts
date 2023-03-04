@@ -8,6 +8,10 @@ enum ImageVariants {
     Carousel
 }
 
+function componentSet(component: InstanceNode | DocumentNode | ComponentSetNode | ComponentNode, type: string, name: string) {
+    return component.findOne(node => node.type == type && node.name == name)
+}
+
 figma.ui.onmessage = async pluginMessage => {
 
     const time = new Date();
@@ -16,7 +20,7 @@ figma.ui.onmessage = async pluginMessage => {
 
     const {name, username, description, darkMode, imageVariant} = pluginMessage;
 
-    const postComponentSet = figma.root.findOne(node => node.type == "COMPONENT_SET" && node.name == "post") as ComponentSetNode
+    const postComponentSet = componentSet(figma.root, "COMPONENT_SET", "post") as ComponentSetNode
     const defaultVariant = postComponentSet.defaultVariant as ComponentNode;
     const defaultDark = postComponentSet.findOne(node => node.type == "COMPONENT" && node.name == "Image=none, Dark mode=true") as ComponentNode
 
@@ -25,10 +29,10 @@ figma.ui.onmessage = async pluginMessage => {
     if (darkMode) {
         switch (Number(imageVariant)) {
             case ImageVariants.SingleImage:
-                selectedVariant = postComponentSet.findOne(node => node.type == "COMPONENT" && node.name == "Image=single, Dark mode=true") as ComponentNode
+                selectedVariant = componentSet(postComponentSet, "COMPONENT", "Image=single, Dark mode=true") as ComponentNode
                 break
             case ImageVariants.Carousel:
-                selectedVariant = postComponentSet.findOne(node => node.type == "COMPONENT" && node.name == "Image=carousel, Dark mode=true") as ComponentNode
+                selectedVariant = componentSet(postComponentSet, "COMPONENT", "Image=carousel, Dark mode=true") as ComponentNode
                 break
             default:
                 selectedVariant = defaultDark
@@ -37,10 +41,10 @@ figma.ui.onmessage = async pluginMessage => {
     } else {
         switch (Number(imageVariant)) {
             case ImageVariants.SingleImage:
-                selectedVariant = postComponentSet.findOne(node => node.type == "COMPONENT" && node.name == "Image=single, Dark mode=false") as ComponentNode
+                selectedVariant = componentSet(postComponentSet, "COMPONENT", "Image=single, Dark mode=false") as ComponentNode
                 break
             case ImageVariants.Carousel:
-                selectedVariant = postComponentSet.findOne(node => node.type == "COMPONENT" && node.name == "Image=carousel, Dark mode=false") as ComponentNode
+                selectedVariant = componentSet(postComponentSet, "COMPONENT", "Image=carousel, Dark mode=false") as ComponentNode
                 break
             default:
                 selectedVariant = defaultVariant
@@ -48,19 +52,20 @@ figma.ui.onmessage = async pluginMessage => {
         }
     }
 
+
     const newPost = selectedVariant.createInstance()
 
-    const templateName = newPost.findOne(node => node.type == "TEXT" && node.name == "displayName") as TextNode
-    const templateUsername = newPost.findOne(node => node.type == "TEXT" && node.name == "@username") as TextNode
-    const templateDescription = newPost.findOne(node => node.type == "TEXT" && node.name == "description") as TextNode
-    const numLikes = newPost.findOne(node => node.type == "TEXT" && node.name == "likesLabel") as TextNode
-    const numComments = newPost.findOne(node => node.type == "TEXT" && node.name == "commentsLabel") as TextNode
-    const timeStamp = newPost.findOne(node => node.type == "TEXT" && node.name == "timestamp") as TextNode
-    const dateStamp = newPost.findOne(node => node.type == "TEXT" && node.name == "datestamp") as TextNode
+    const templateName = componentSet(newPost, "TEXT", "displayName") as TextNode
+    const templateUsername = componentSet(newPost, "TEXT", "@username") as TextNode
+    const templateDescription = componentSet(newPost, "TEXT", "description") as TextNode
+    const numLikes = componentSet(newPost, "TEXT", "likesLabel") as TextNode
+    const numComments = componentSet(newPost, "TEXT", "commentsLabel") as TextNode
+    const timeStamp = componentSet(newPost, "TEXT", "timestamp") as TextNode
+    const dateStamp = componentSet(newPost, "TEXT", "datestamp") as TextNode
 
 
     templateName.characters = name;
-    templateUsername.characters = username;
+    templateUsername.characters = `@${username}`;
     templateDescription.characters = description;
     numLikes.characters = (Math.floor(Math.random() * 1000) + 1).toString()
     numComments.characters = (Math.floor(Math.random() * 1000) + 1).toString()
