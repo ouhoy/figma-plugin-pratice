@@ -2,6 +2,15 @@
 
 
 <style>
+
+    body {
+        padding: 2em;
+    }
+
+    div {
+        margin: 1em;
+    }
+
     input, textarea {
         display: block;
     }
@@ -9,18 +18,34 @@
 <h1>Petma Plugin</h1>
 <div>
     <label for="username">Username</label>
-    <input id="username" type="text">
+    <input class="input__field" placeholder="Your Petma username" id="username" type="text">
 
     <label for="name">Name</label>
-    <input id="name" type="text">
+    <input class="input__field" placeholder="Your Petma display name" id="name" type="text">
 
     <label for="description">Description</label>
-    <textarea id="description" rows="2"></textarea>
+    <input class="textarea"  placeholder="Your post goes here" id="description" rows="2"></input>
+</div>
+<div class="switch">
 
-    <div class="switch">
+    <input class="switch__toggle" type="checkbox" id="dark-mode-on">
+    <label class="switch__label" for="dark-mode-on">Dark Mode</label>
 
-        <input class="switch__toggle" type="checkbox" id="dark-mode-on">
-        <label class="switch__label" for="dark-mode-on">Dark Mode</label>
+</div>
 
-    </div>
+<div class="radio">
+
+    <input class="radio__button" type="radio" name="variantGroup" id="radioButtonOne">
+    <label for="radioButtonOne" class="radio__label">No Image</label>
+
+    <input class="radio__button" type="radio" name="variantGroup" id="radioButtonTwo">
+    <label for="radioButtonTwo" class="radio__label">Single Image</label>
+
+    <input class="radio__button" type="radio" name="variantGroup" id="radioButtonThree">
+    <label for="radioButtonThree" class="radio__label">Carousel</label>
+
+</div>
+
+<div>
+    <button class="button button--primary" id="submit-post">Submit</button>
 </div>
